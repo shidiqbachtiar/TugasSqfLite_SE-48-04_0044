@@ -44,4 +44,42 @@ class BarangController extends GetxController {
     );
     await _muatBarang(tampilkanSukses: false);
   }
+
+  Future<void> ubahBarang(Barang barang) async {
+    try {
+      if (await repo.update(barang) == 0) {
+        Get.snackbar(
+          'Error',
+          'Barang tidak ditemukan',
+          backgroundColor: Colors.red,
+        );
+      } else {
+        Get.snackbar('Sukses', 'Barang berhasil diubah');
+      }
+    } catch (_) {
+      Get.snackbar('Error', 'Gagal', backgroundColor: Colors.red);
+      return;
+    }
+
+    await _muatBarang(tampilkanSukses: false);
+  }
+
+  Future<void> hapusBarang(int id) async {
+    try {
+      if (await repo.delete(id) == 0) {
+        Get.snackbar(
+          'Error',
+          'Barang tidak ditemukan',
+          backgroundColor: Colors.red,
+        );
+      } else {
+        Get.snackbar('Sukses', 'Barang berhasil dihapus');
+      }
+    } catch (_) {
+      Get.snackbar('Error', 'Gagal', backgroundColor: Colors.red);
+      return;
+    }
+
+    await _muatBarang(tampilkanSukses: false);
+  }
 }

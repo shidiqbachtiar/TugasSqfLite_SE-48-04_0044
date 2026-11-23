@@ -17,4 +17,19 @@ class BarangDao {
     final getData = await db.query(_nameTable, orderBy: 'id DESC');
     return getData.map(Barang.fromMap).toList();
   }
+
+  Future<int> update(Barang barang) async {
+    final db = await _dbHelper.database;
+    return db.update(
+      _nameTable,
+      {'nama': barang.nama, 'stok': barang.stok},
+      where: 'id = ?',
+      whereArgs: [barang.id],
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await _dbHelper.database;
+    return db.delete(_nameTable, where: 'id = ?', whereArgs: [id]);
+  }
 }
